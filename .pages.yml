@@ -1,0 +1,90 @@
+media:
+  input: assets
+  output: /assets
+  extensions: [jpg, jpeg, png, webp]
+  rename: false
+
+content:
+  - name: members
+    label: 团队成员
+    type: file
+    path: data.json
+    fields:
+      - name: members
+        label: 成员列表
+        type: object
+        list: true
+        fields:
+          - name: photo
+            label: 照片文件名
+            type: image
+            options:
+              media: assets
+          - name: sur
+            label: 姓氏（无照片时占位）
+            type: string
+          - name: zh.name
+            label: 中文姓名
+            type: string
+            required: true
+          - name: zh.en
+            label: 英文名
+            type: string
+          - name: zh.role
+            label: 身份/角色（中文）
+            type: string
+          - name: en.name
+            label: 英文姓名
+            type: string
+          - name: en.role
+            label: 角色（英文界面）
+            type: string
+
+  - name: outputs
+    label: 研究成果
+    type: file
+    path: data.json
+    fields:
+      - name: outputs
+        label: 成果列表
+        type: object
+        list: true
+        fields:
+          - name: date
+            label: 月份（如 2026-10）
+            type: string
+            required: true
+          - name: mp
+            label: 公众号推文链接
+            type: string
+          - name: src
+            label: 原文链接（可空）
+            type: string
+          - name: zh.title
+            label: 中文标题
+            type: string
+            required: true
+          - name: zh.enName
+            label: 英文原名
+            type: string
+          - name: zh.venue
+            label: 中文期刊/出处
+            type: string
+          - name: en.title
+            label: 英文标题
+            type: string
+          - name: en.venue
+            label: 英文期刊/出处
+            type: string
+
+  - name: about
+    label: 团队简介
+    type: file
+    path: data.json
+    fields:
+      - name: about.zh
+        label: 中文简介
+        type: text
+      - name: about.en
+        label: 英文简介
+        type: text

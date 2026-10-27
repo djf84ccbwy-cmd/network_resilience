@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>网络韧性 Network Resilience</title>
+<meta name="description" content="网络韧性：专注交通系统韧性与可靠性研究，融合复杂网络建模、大数据挖掘与深度学习。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23173A5E'/%3E%3Ccircle cx='11' cy='16' r='3.2' fill='%231F9E97'/%3E%3Ccircle cx='22' cy='10' r='3.2' fill='%23E8833A'/%3E%3Ccircle cx='22' cy='22' r='3.2' fill='%231F9E97'/%3E%3Cpath d='M11 16 L22 10 M11 16 L22 22 M22 10 L22 22' stroke='%23ffffff' stroke-width='1.4'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap">
+<style>
+:root{
+  --primary:#173A5E; --primary-dark:#0E2740; --primary-light:#2A5580; --primary-pale:#E7F3F2;
+  --navy:#173A5E; --navy-deep:#0E2740; --teal:#1F9E97; --teal-dark:#157A75;
+  --amber:#E8833A; --bg:#F3F6F8; --card:#FFFFFF; --ink:#26333F; --muted:#5F7180;
+  --line:#E1E8EC; --maxw:1120px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"Noto Sans SC","Microsoft YaHei","PingFang SC",system-ui,-apple-system,sans-serif;
+  color:var(--ink);background:var(--bg);line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:var(--teal-dark);text-decoration:none}
+a:hover{color:var(--teal)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+/* ===== 视图路由显隐 ===== */
+.view{display:none}
+.view.active{display:block}
+
+/* ===== 顶部导航 ===== */
+.site-nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:66px;gap:12px}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand img{height:40px;width:auto}
+.brand-name{display:flex;flex-direction:column;line-height:1.2}
+.brand-name b{font-size:18px;color:var(--navy);font-weight:900;letter-spacing:.02em}
+.brand-name span{font-size:11px;color:var(--muted);letter-spacing:.08em}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-links{display:flex;gap:4px;align-items:center}
+.nav-links a{color:var(--ink);font-size:15px;font-weight:500;padding:8px 13px;border-radius:8px}
+.nav-links a:hover{background:var(--bg);color:var(--teal-dark)}
+.nav-links a.active{color:var(--teal-dark);background:#E7F3F2}
+.lang-switch{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang-switch button{border:none;background:#fff;padding:7px 13px;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--muted);font-family:inherit}
+.lang-switch button.on{background:var(--teal);color:#fff}
+.nav-toggle{display:none;background:none;border:1px solid var(--line);border-radius:8px;width:42px;height:42px;cursor:pointer;align-items:center;justify-content:center}
+.nav-toggle span{display:block;width:20px;height:2px;background:var(--navy);margin:3px 0;border-radius:2px}
+
+/* ===== Hero ===== */
+.hero{position:relative;color:#fff;overflow:hidden;min-height:74vh;display:flex;align-items:center}
+.hero-bg{position:absolute;inset:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 40%}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(14,39,64,.92) 0%,rgba(14,39,64,.78) 45%,rgba(14,39,64,.45) 100%)}
+.hero-net{position:absolute;inset:0;opacity:.18;pointer-events:none}
+.hero-inner{position:relative;z-index:2;padding-block:92px}
+.hero-kicker{display:inline-flex;align-items:center;gap:10px;font-size:14px;letter-spacing:.12em;color:#BFE3E0;font-weight:500;margin-bottom:22px}
+.hero-kicker::before{content:"";width:34px;height:2px;background:var(--teal)}
+.hero h1{font-size:clamp(36px,7vw,64px);font-weight:900;line-height:1.15;letter-spacing:.02em}
+.hero .en-sub{font-size:clamp(17px,3vw,25px);font-weight:300;letter-spacing:.18em;color:#D7E6EE;margin-top:10px}
+.hero p.lede{max-width:620px;margin-top:22px;font-size:17px;color:#E6EEF3;font-weight:300}
+.chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.chip{border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:9px 18px;font-size:14px;color:#fff;background:rgba(255,255,255,.08)}
+.chip em{font-style:normal;color:var(--amber);margin-right:8px;font-weight:700}
+
+/* ===== 通用区块 ===== */
+section{padding:72px 0}
+.sec-head{margin-bottom:34px}
+.sec-head .kicker{font-size:13px;letter-spacing:.16em;color:var(--teal-dark);font-weight:700}
+.sec-head h2{font-size:clamp(26px,4vw,34px);font-weight:900;color:var(--navy);margin-top:8px}
+.sec-head .en-sub{color:var(--muted);font-size:15px;font-weight:300;letter-spacing:.06em;margin-top:4px}
+
+/* ===== 简介 ===== */
+.about-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:32px;max-width:880px;margin:0 auto}
+.about-card p{font-size:16px;text-align:justify;color:var(--ink)}
+
+/* ===== 近期发布 / 论文列表 ===== */
+.pub-list{display:flex;flex-direction:column}
+.pub-item{display:grid;grid-template-columns:96px 1fr;gap:24px;padding:26px 0;border-bottom:1px solid var(--line)}
+.pub-item:first-child{padding-top:0}
+.pub-year{align-self:start;background:var(--navy);color:#fff;border-radius:10px;padding:10px 0;text-align:center;font-weight:900;font-size:20px}
+.pub-body h3{font-size:18px;font-weight:700;line-height:1.5}
+.pub-body h3 a{color:var(--navy)}
+.pub-body h3 a:hover{color:var(--teal-dark)}
+.pub-meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:12px;font-size:13.5px;color:var(--muted)}
+.pub-meta .dot{color:var(--teal)}
+.pub-meta a{color:var(--teal-dark);word-break:break-all}
+
+/* ===== 研究成果列表（独立视图） ===== */
+.out-list{display:flex;flex-direction:column;max-width:960px;margin:0 auto}
+.out-item{display:grid;grid-template-columns:88px 1fr;gap:22px;padding:24px 0;border-bottom:1px solid var(--line)}
+.out-item:first-child{padding-top:0}
+.out-date{align-self:start;background:#E7F3F2;color:var(--teal-dark);border-radius:10px;padding:9px 0;text-align:center;font-weight:700;font-size:14px;letter-spacing:.03em}
+.out-body h3{font-size:17px;font-weight:700;line-height:1.55}
+.out-body h3 a{color:var(--navy)}
+.out-body h3 a:hover{color:var(--teal-dark)}
+.out-en{font-size:14px;font-style:italic;color:#3D4C59;margin-top:6px;line-height:1.5}
+.out-meta{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:13px;color:var(--muted)}
+.out-meta .dot{color:var(--teal)}
+.out-meta a{color:var(--teal-dark);word-break:break-all}
+
+/* ===== 研究方向（独立视图） ===== */
+.research{background:var(--card)}
+.dir-lead{max-width:720px;color:var(--muted);font-size:16px;margin-bottom:34px}
+.dir-lead b{color:var(--teal-dark)}
+.dir-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.dir-card{border:1px solid var(--line);border-radius:14px;padding:28px 24px;background:var(--bg);transition:transform .2s,box-shadow .2s}
+.dir-card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(23,58,94,.10)}
+.dir-card svg{width:56px;height:56px;margin-bottom:18px}
+.dir-card h3{font-size:18px;font-weight:700;color:var(--navy)}
+.dir-card .en{font-size:13px;color:var(--teal-dark);margin:4px 0 12px}
+.dir-card p{font-size:14.5px;color:var(--muted)}
+
+/* ===== 团队（独立视图） ===== */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:28px;max-width:1200px;margin:0 auto}
+.member{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-align:center;transition:transform .2s, box-shadow .2s}
+.member:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(14,39,64,.12)}
+.member .photo{height:300px;background:#E8EEF1;overflow:hidden}
+.member .photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.member .photo.ph{display:flex;align-items:center;justify-content:center;color:var(--navy);font-size:48px;font-weight:900}
+.member .info{padding:22px 16px}
+.member .name{font-size:19px;font-weight:700;color:var(--navy)}
+.member .name-en{font-size:14px;color:var(--muted);margin-top:4px;font-style:italic}
+.member .role{display:inline-block;margin-top:12px;font-size:13px;color:var(--teal-dark);background:#E7F3F2;border-radius:999px;padding:5px 14px}
+
+/* ===== 联系 ===== */
+.contact{background:var(--navy-deep);color:#E6EEF3}
+.contact .sec-head h2{color:#fff}
+.contact .sec-head .kicker{color:#7FC9C3}
+.contact-grid{display:grid;grid-template-columns:1fr;gap:22px;max-width:560px}
+.contact-card{border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:28px}
+.contact-card h3{font-size:16px;color:#BFE3E0;margin-bottom:10px;font-weight:700}
+.contact-card a.mail{font-size:20px;font-weight:700;color:#fff;letter-spacing:.02em}
+.contact-card a.mail:hover{color:var(--teal)}
+.contact-card p{font-size:15px;color:#D7E6EE}
+
+footer{background:#0A1E30;color:#9DB3C2;padding:28px 0;font-size:13.5px;text-align:center}
+footer .f-brand{color:#fff;font-weight:700;margin-bottom:6px}
+
+/* ===== 响应式 ===== */
+@media (max-width:900px){
+  .dir-cards{grid-template-columns:1fr;gap:16px}
+  .contact-grid{grid-template-columns:1fr}
+}
+@media (max-width:768px){
+  .nav-links{position:absolute;top:66px;left:0;right:0;background:#fff;flex-direction:column;align-items:stretch;padding:12px 20px 18px;border-bottom:1px solid var(--line);display:none;gap:2px}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:13px 14px;font-size:16px}
+  .nav-toggle{display:flex;flex-direction:column}
+  section{padding:52px 0}
+  .hero{min-height:62vh}
+  .hero-inner{padding-block:64px}
+  .pub-item{grid-template-columns:1fr;gap:12px}
+  .pub-year{justify-self:start;padding:8px 18px;font-size:16px}
+  .out-item{grid-template-columns:1fr;gap:10px}
+  .out-date{justify-self:start;padding:7px 16px;font-size:13px}
+}
+
+/* ===== 可视化编辑面板 ===== */
+.pe-open-btn{border:1px solid var(--teal);background:#fff;color:var(--teal-dark);border-radius:999px;padding:7px 15px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap}
+.pe-open-btn:hover{background:var(--teal);color:#fff}
+.pe-mask{position:fixed;inset:0;background:rgba(14,39,64,.45);z-index:90;display:none}
+.pe-mask.on{display:block}
+.pe-panel{position:fixed;top:0;right:0;height:100vh;width:440px;max-width:94vw;background:#fff;z-index:91;transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(0,0,0,.18)}
+.pe-panel.on{transform:translateX(0)}
+.pe-panel>header{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--line)}
+.pe-panel>header b{font-size:18px;color:var(--navy)}
+.pe-close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted);line-height:1}
+.pe-tabs{display:flex;flex-wrap:wrap;gap:6px;padding:12px 20px;border-bottom:1px solid var(--line)}
+.pe-tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 13px;font-size:13px;cursor:pointer;color:var(--muted);font-family:inherit}
+.pe-tab.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.pe-body{flex:1;overflow-y:auto;padding:18px 20px}
+.pe-group{margin-bottom:22px}
+.pe-group h4{font-size:14px;color:var(--teal-dark);margin-bottom:10px;font-weight:700}
+.pe-field{margin-bottom:12px}
+.pe-field label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:5px}
+.pe-field input,.pe-field textarea,.pe-field select{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-size:16px;font-family:inherit;color:var(--ink);background:#fff}
+.pe-field textarea{min-height:84px;resize:vertical;line-height:1.6}
+.pe-row{border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px;background:var(--bg)}
+.pe-row-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.pe-row-head span{font-size:13px;font-weight:700;color:var(--navy)}
+.pe-del{background:none;border:none;color:#C0504D;cursor:pointer;font-size:13px}
+.pe-add{width:100%;border:1px dashed var(--teal);background:#fff;color:var(--teal-dark);border-radius:10px;padding:10px;cursor:pointer;font-size:14px;font-family:inherit}
+.pe-bar{display:flex;gap:10px;padding:14px 20px;border-top:1px solid var(--line)}
+.pe-bar button{flex:1;border-radius:10px;padding:11px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;border:1px solid var(--line)}
+.pe-save{background:var(--teal);color:#fff;border-color:var(--teal)!important}
+.pe-export{background:#fff;color:var(--navy)}
+.pe-reset{background:#fff;color:#C0504D;flex:0 0 78px}
+.pe-toast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%);background:var(--navy-deep);color:#fff;padding:11px 20px;border-radius:999px;font-size:14px;z-index:99;opacity:0;transition:opacity .2s;pointer-events:none}
+.pe-toast.on{opacity:1}
+
+
+/* ===== 登录口令锁 ===== */
+.login-mask{position:fixed;inset:0;background:rgba(14,39,64,.5);z-index:120;display:none;align-items:center;justify-content:center}
+.login-mask.on{display:flex}
+.login-box{background:#fff;border-radius:16px;padding:30px;width:340px;max-width:90vw;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.login-box h3{color:var(--navy);font-size:19px;margin-bottom:18px;text-align:center;font-weight:900}
+.login-box input{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-size:16px;margin-bottom:12px;font-family:inherit;color:var(--ink)}
+.login-err{color:#C0504D;font-size:13px;min-height:18px;margin-bottom:6px}
+.lg-submit{width:100%;background:var(--teal);color:#fff;border:none;border-radius:10px;padding:11px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:4px}
+.lg-cancel{width:100%;background:#fff;color:var(--muted);border:none;padding:9px;cursor:pointer;font-family:inherit;margin-top:6px}
+.pe-logout{background:none;border:none;color:#C0504D;cursor:pointer;font-size:13px;font-family:inherit;margin-left:12px}
+
+</style>
+</head>
+<body>
+
+<!-- ======================= 顶部导航 ======================= -->
+<header class="site-nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#/home">
+      <img src="assets/logo.jpg" alt="Logo">
+      <span class="brand-name"><b data-i18n="brandName"></b><span data-i18n="brandSub"></span></span>
+    </a>
+    <div class="nav-right">
+      <nav class="nav-links" id="navLinks">
+        <a href="#/home" data-route="home" data-i18n="navHome"></a>
+        <a href="#/research" data-route="research" data-i18n="navResearch"></a>
+        <a href="#/publications" data-route="publications" data-i18n="navPubs"></a>
+        <a href="#/team" data-route="team" data-i18n="navTeam"></a>
+      </nav>
+      <div class="lang-switch" role="group" aria-label="language">
+        <button id="btnZh" type="button">中文</button>
+        <button id="btnEn" type="button">英文</button>
+      </div>
+      <button id="btnEdit" class="pe-open-btn" type="button" data-i18n="btnEdit">编辑</button>
+      <button class="nav-toggle" id="navToggle" aria-label="menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ======================= 视图：首页 ======================= -->
+<div class="view active" id="view-home">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-bg"><img src="assets/hero.jpg" alt=""></div>
+    <svg class="hero-net" aria-hidden="true" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
+      <g stroke="#ffffff" stroke-width="1">
+        <path d="M120 480 L300 360 L520 430 L760 300 L900 420"/><path d="M300 360 L360 180 L520 430"/><path d="M520 430 L640 200 L760 300"/>
+      </g>
+      <g fill="#ffffff"><circle cx="120" cy="480" r="4"/><circle cx="300" cy="360" r="4"/><circle cx="520" cy="430" r="4"/><circle cx="760" cy="300" r="4"/><circle cx="900" cy="420" r="4"/><circle cx="360" cy="180" r="4"/><circle cx="640" cy="200" r="4"/></g>
+      <circle cx="300" cy="360" r="6" fill="#E8833A"/><circle cx="760" cy="300" r="6" fill="#1F9E97"/>
+    </svg>
+    <div class="wrap hero-inner">
+      <span class="hero-kicker" data-i18n="heroKicker"></span>
+      <h1 data-i18n="heroTitle"></h1>
+      <div class="en-sub" data-i18n="heroSub"></div>
+      <p class="lede" data-i18n="heroLede"></p>
+      <div class="chips" id="heroChips"></div>
+    </div>
+  </div>
+
+  <!-- 团队简介 -->
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker" data-i18n="aboutKicker"></div>
+        <h2 data-i18n="aboutTitle"></h2>
+      </div>
+      <div class="about-card"><p id="aboutBody"></p></div>
+    </div>
+  </section>
+
+  <!-- 近期发布 -->
+  <section id="recent" class="research">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker" data-i18n="recentKicker"></div>
+        <h2 data-i18n="recentTitle"></h2>
+        <div class="en-sub" data-i18n="recentSub"></div>
+      </div>
+      <div class="pub-list" id="pubList"></div>
+    </div>
+  </section>
+
+  <!-- 联系方式 -->
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker" data-i18n="contactKicker"></div>
+        <h2 data-i18n="contactTitle"></h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h3 data-i18n="mailLabel"></h3>
+          <a class="mail" id="mailLink" href=""></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= 视图：研究方向（单独点击进入） ======================= -->
+<div class="view" id="view-research">
+  <section class="research">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker" data-i18n="researchKicker"></div>
+        <h2 data-i18n="researchTitle"></h2>
+        <div class="en-sub" data-i18n="researchSub"></div>
+      </div>
+      <p class="dir-lead" id="researchLead"></p>
+      <div class="dir-cards" id="researchList"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= 视图：团队成员（单独点击进入） ======================= -->
+<div class="view" id="view-team">
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker" data-i18n="teamKicker"></div>
+        <h2 data-i18n="teamTitle"></h2>
+        <div class="en-sub" data-i18n="teamSub"></div>
+      </div>
+      <div class="team-grid" id="teamList"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ======================= 视图：研究成果（单独点击进入） ======================= -->
+<div class="view" id="view-publications">
+  <section class="research">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="kicker" data-i18n="pubKicker"></div>
+        <h2 data-i18n="pubTitle"></h2>
+        <div class="en-sub" data-i18n="pubSub"></div>
+      </div>
+      <div class="out-list" id="outList"></div>
+    </div>
+  </section>
+</div>
+</main>
+
+<!-- 素材注册区：成员照片在上方 CONFIG 里配置；为保证发布时图片被带上，请把每位成员照片文件名也在此用一行 img 登记（本地打开可省略） -->
+<div aria-hidden="true" style="position:absolute;width:1px;height:1px;overflow:hidden;opacity:0">
+  <img src="data:image/jpeg;base64,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" alt="">
+</div>
+
+
+<!-- ===== 可视化编辑面板 ===== -->
+<div class="pe-mask" id="peMask"></div>
+<aside class="pe-panel" id="pePanel">
+  <header><b>内容编辑</b><button class="pe-close" id="peClose" type="button" aria-label="关闭">&times;</button></header>
+  <nav class="pe-tabs" id="peTabs"></nav>
+  <div class="pe-body" id="peBody"></div>
+  <footer class="pe-bar">
+    <button class="pe-save" id="peSave" type="button">保存并应用</button>
+    <button class="pe-export" id="peExport" type="button">导出 HTML</button>
+    <button class="pe-reset" id="peReset" type="button">重置</button>
+  </footer>
+</aside>
+<div class="pe-toast" id="peToast"></div>
+
+<div class="login-mask" id="loginMask">
+  <div class="login-box">
+    <h3>登录后编辑内容</h3>
+    <input id="lgAccount" type="text" placeholder="邮箱或手机号" autocomplete="username">
+    <input id="lgPass" type="password" placeholder="密码" autocomplete="current-password">
+    <div class="login-err" id="lgErr"></div>
+    <button class="lg-submit" id="lgSubmit" type="button">登录</button>
+    <button class="lg-cancel" id="lgCancel" type="button">取消</button>
+  </div>
+</div>
+
+
+<footer>
+  <div class="wrap">
+    <div class="f-brand" data-i18n="footerBrand"></div>
+    <div data-i18n="footerNote"></div>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+ *  ★★★ 站点内容配置区：以后改文字、加论文、加成员，只改这里 ★★★
+ *  每段都有 zh（中文）和 en（英文）两套，点“中文/EN”自动对应。
+ *
+ *  【修改文字】直接改引号里的内容即可。
+ *  【新增一篇论文】在 publications 数组里复制一整段 { ... }，粘贴后改内容。
+ *  【新增一位成员】在 members 数组复制一整段 { ... }；photo 填 assets 里的
+ *     图片文件名，没有照片就留 ""（会显示姓氏占位）。
+ *  【新增一个研究方向】在 research 数组复制一整段，icon 可选 net / curve / route。
+ * ===================================================================== */
+let CONFIG = {};
+
+async function loadConfig() {
+  try {
+    const res = await fetch('./data.json');
+    CONFIG = await res.json();
+  } catch(e) {
+    console.error('Failed to load data.json:', e);
+    document.body.innerHTML = '<div style="padding:40px;text-align:center;font-family:sans-serif">数据加载失败，请通过本地服务器访问（python -m http.server）</div>';
+    return;
+  }
+  // 数据加载完成后再执行渲染
+  applyLang();
+  route();
+}
+
+loadConfig();
+
+
+
+/* ===================== 以下为页面逻辑，一般无需改动 ===================== */
+
+/* 读取本地保存的内容覆盖（可视化编辑面板） */
+function __peDeepMerge(a,b){
+  for(var k in b){
+    if(b[k] && typeof b[k]==="object" && !Array.isArray(b[k]) && a[k] && typeof a[k]==="object"){ __peDeepMerge(a[k],b[k]); }
+    else { a[k]=b[k]; }
+  }
+  return a;
+}
+try{ var __peSaved=JSON.parse(localStorage.getItem("nr-config")||"null"); if(__peSaved) __peDeepMerge(CONFIG,__peSaved); }catch(e){}
+if(window.__NR_USER__) __peDeepMerge(CONFIG,window.__NR_USER__);
+
+let lang = localStorage.getItem("nr-lang") || "zh";
+const $ = s => document.querySelector(s);
+
+const ICONS = {
+  net:'<svg viewBox="0 0 56 56" fill="none"><circle cx="14" cy="14" r="5" fill="#1F9E97"/><circle cx="42" cy="14" r="5" fill="#1F9E97"/><circle cx="28" cy="42" r="5" fill="#E8833A"/><path d="M14 14 L42 14 M14 14 L28 42 M42 14 L28 42" stroke="#173A5E" stroke-width="1.6"/></svg>',
+  curve:'<svg viewBox="0 0 56 56" fill="none"><path d="M8 44 Q20 20 30 30 T48 12" stroke="#1F9E97" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="8" cy="44" r="4.5" fill="#173A5E"/><circle cx="48" cy="12" r="4.5" fill="#E8833A"/></svg>',
+  route:'<svg viewBox="0 0 56 56" fill="none"><circle cx="12" cy="28" r="5" fill="#1F9E97"/><circle cx="44" cy="28" r="5" fill="#E8833A"/><path d="M12 28 L44 28" stroke="#173A5E" stroke-width="1.8" stroke-dasharray="4 4"/><path d="M36 22 L44 28 L36 34" stroke="#173A5E" stroke-width="1.8" fill="none"/></svg>',
+  weather:'<svg viewBox="0 0 56 56" fill="none"><circle cx="28" cy="25" r="9" stroke="#E8833A" stroke-width="2.4"/><path d="M28 9v5M28 36v5M12 25h5M39 25h5M16.5 13.5l3.5 3.5M36 37l3.5 3.5M39.5 13.5L36 17M20 37l-3.5 3.5" stroke="#1F9E97" stroke-width="2" stroke-linecap="round"/></svg>',
+  geo:'<svg viewBox="0 0 56 56" fill="none"><path d="M9 43 L26 15 L34 30 L41 21 L49 43 Z" fill="#1F9E97" opacity=".85"/><path d="M26 15 L30 26 L27 35" stroke="#173A5E" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>',
+  peak:'<svg viewBox="0 0 56 56" fill="none"><path d="M10 44 L20 34 L28 38 L38 19 L48 28" stroke="#1F9E97" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="38" cy="19" r="4.5" fill="#E8833A"/></svg>'
+};
+
+function renderChips(){
+  $("#heroChips").innerHTML = CONFIG.chips[lang].map((c,i)=>`<span class="chip"><em>0${i+1}</em>${c}</span>`).join("");
+}
+function renderAbout(){ $("#aboutBody").textContent = CONFIG.about[lang]; }
+function renderResearch(){
+  $("#researchLead").innerHTML = CONFIG.researchLead[lang];
+  $("#researchList").innerHTML = CONFIG.research.map(r=>`
+    <div class="dir-card">${ICONS[r.icon]||ICONS.net}
+      <h3>${r[lang].title}</h3>
+      ${r[lang].sub?`<div class="en">${r[lang].sub}</div>`:""}
+      <p>${r[lang].desc}</p>
+    </div>`).join("");
+}
+function renderTeam(){
+  $("#teamList").innerHTML = CONFIG.members.map(m=>{
+    const photo = m.photo
+      ? `<div class="photo"><img src="${m.photo.startsWith('data:')?m.photo:'assets/'+m.photo}" alt="${m[lang].name}"></div>`
+      : `<div class="photo ph">${m.sur}</div>`;
+    return `<div class="member">${photo}
+      <div class="info">
+        <div class="name">${m[lang].name}</div>
+        ${m[lang].en?`<div class="name-en">${m[lang].en}</div>`:""}
+        <div class="role">${m[lang].role}</div>
+      </div></div>`;
+  }).join("");
+}
+function renderPubs(){
+  $("#pubList").innerHTML = CONFIG.publications.map(p=>`
+    <article class="pub-item">
+      <div class="pub-year">${p.year}</div>
+      <div class="pub-body">
+        <h3><a href="${p.doi}" target="_blank" rel="noopener">${p[lang].title}</a></h3>
+        <div class="pub-meta"><span>${p[lang].meta}</span><span class="dot">·</span>
+          <span><a href="${p.doi}" target="_blank" rel="noopener">${p.doi.replace("https://doi.org/","")}</a></span>
+        </div>
+      </div>
+    </article>`).join("");
+}
+function renderOutputs(){
+  $("#outList").innerHTML = CONFIG.outputs.map(o=>`
+    <article class="out-item">
+      <div class="out-date">${o.date}</div>
+      <div class="out-body">
+        <h3><a href="${o.mp}" target="_blank" rel="noopener">${o[lang].title}</a></h3>
+        ${lang==="zh" && o.zh.enName?`<div class="out-en">${o.zh.enName}</div>`:""}
+        <div class="out-meta"><span>${o[lang].venue}</span>
+          ${o.src?`<span class="dot">·</span><span><a href="${o.src}" target="_blank" rel="noopener">${lang==="zh"?"原文":"Original"}</a></span>`:""}
+          <span class="dot">·</span><span><a href="${o.mp}" target="_blank" rel="noopener">${lang==="zh"?"公众号推文":"WeChat Post"}</a></span>
+        </div>
+      </div>
+    </article>`).join("");
+}
+function renderContact(){
+  const mail = $("#mailLink");
+  mail.textContent = CONFIG.contact.mail;
+  mail.href = "mailto:" + CONFIG.contact.mail;
+}
+function applyLang(){
+  const u = CONFIG.ui[lang];
+  document.documentElement.lang = lang==="zh" ? "zh-CN" : "en";
+  document.title = lang==="zh" ? "网络韧性" : "Network Resilience";
+  document.querySelectorAll("[data-i18n]").forEach(el=>{ el.textContent = u[el.dataset.i18n] || ""; });
+  $("#btnZh").classList.toggle("on", lang==="zh");
+  $("#btnEn").classList.toggle("on", lang==="en");
+  $("#btnZh").textContent = lang==="zh" ? "中文" : "Chinese";
+  $("#btnEn").textContent = lang==="zh" ? "英文" : "English";
+  renderChips(); renderAbout(); renderResearch(); renderTeam(); renderPubs(); renderOutputs(); renderContact();
+}
+
+/* ---- 路由：#/home #/research #/publications #/team ---- */
+function route(){
+  const h = (location.hash.replace("#/","")) || "home";
+  ["home","research","publications","team"].forEach(v=>{
+    $("#view-"+v).classList.toggle("active", v===h);
+  });
+  document.querySelectorAll(".nav-links a").forEach(a=>{
+    a.classList.toggle("active", a.dataset.route===h);
+  });
+  window.scrollTo({top:0,behavior:"auto"});
+}
+
+/* ---- 事件 ---- */
+$("#btnZh").addEventListener("click",()=>setLang("zh"));
+$("#btnEn").addEventListener("click",()=>setLang("en"));
+function setLang(l){ lang=l; localStorage.setItem("nr-lang",l); applyLang(); }
+window.addEventListener("hashchange", route);
+
+const navLinks = $("#navLinks"), navToggle = $("#navToggle");
+navToggle.addEventListener("click",()=>navLinks.classList.toggle("open"));
+navLinks.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>navLinks.classList.remove("open")));
+
+</script>
+
+<script>
+/* ===== 可视化编辑面板逻辑（独立块，读取全局 CONFIG / applyLang） ===== */
+(function(){
+  var TABS=[{id:"basic",label:"基本信息"},{id:"research",label:"研究方向"},{id:"members",label:"成员"},{id:"pubs",label:"近期发布"},{id:"outputs",label:"研究成果"}];
+  var cur="basic";
+  function gv(path){ return path.split(".").reduce(function(o,k){return o==null?o:o[k];},CONFIG); }
+  function sp(obj,path,v){ var ks=path.split("."); var o=obj; for(var i=0;i<ks.length-1;i++){ if(o[ks[i]]==null||typeof o[ks[i]]!=="object") o[ks[i]]={}; o=o[ks[i]]; } o[ks[ks.length-1]]=v; }
+  function esc(x){ return x==null?"":String(x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;"); }
+  function field(label,path,val,type,chips){
+    var v=val==null?"":val;
+    if(type==="textarea") return '<div class="pe-field"><label>'+label+'</label><textarea data-path="'+path+'">'+v+'</textarea></div>';
+    var chip=chips?' data-chips="1"':"";
+    return '<div class="pe-field"><label>'+label+'</label><input data-path="'+path+'"'+chip+' value="'+esc(v)+'"></div>';
+  }
+  var ICONS=["net","route","peak","weather","geo","curve"];
+
+  /* ---- 各分组内容 ---- */
+  function paneBasic(){
+    return '<div class="pe-pane" data-pane="basic">'
+      +'<div class="pe-group"><h4>联系与首页</h4>'
+      +field("联系邮箱","contact.mail",CONFIG.contact.mail)
+      +field("首页眉标（中文）","ui.zh.heroKicker",gv("ui.zh.heroKicker"))
+      +field("首页眉标（英文）","ui.en.heroKicker",gv("ui.en.heroKicker"))
+      +field("首页导语（中文）","ui.zh.heroLede",gv("ui.zh.heroLede"),"textarea")
+      +field("首页导语（英文）","ui.en.heroLede",gv("ui.en.heroLede"),"textarea")
+      +field("首页标签·中文（逗号分隔）","chips.zh",CONFIG.chips.zh.join("，"),"",1)
+      +field("首页标签·英文（逗号分隔）","chips.en",CONFIG.chips.en.join(", "),"",1)
+      +'</div>'
+      +'<div class="pe-group"><h4>团队简介</h4>'
+      +field("团队简介（中文）","about.zh",CONFIG.about.zh,"textarea")
+      +field("团队简介（英文）","about.en",CONFIG.about.en,"textarea")
+      +'</div></div>';
+  }
+
+  function researchRow(r,i){
+    var opts=ICONS.map(function(ic){return '<option value="'+ic+'"'+(r.icon===ic?' selected':'')+'>'+ic+'</option>';}).join("");
+    return '<div class="pe-row"><div class="pe-row-head"><span>方向 '+(i+1)+'</span><button class="pe-del" type="button">删除</button></div>'
+      +'<div class="pe-field"><label>图标 icon（net/route/peak/weather/geo/curve）</label><select data-k="icon">'+opts+'</select></div>'
+      +field("中文标题","zh.title",r.zh.title)
+      +field("中文英文副标题","zh.sub",r.zh.sub)
+      +field("中文描述","zh.desc",r.zh.desc,"textarea")
+      +field("英文标题","en.title",r.en.title)
+      +field("英文描述","en.desc",r.en.desc,"textarea")
+      +'</div>';
+  }
+  function paneResearch(){
+    var rows=CONFIG.research.map(function(r,i){return researchRow(r,i);}).join("");
+    return '<div class="pe-pane" data-pane="research"><div class="pe-group"><h4>研究方向（可增删）</h4>'
+      +'<div data-arr="research">'+rows+'</div>'
+      +'<button class="pe-add" type="button" data-add="research">+ 新增一个研究方向</button></div></div>';
+  }
+
+  function memberRow(m,i){
+    var photo=m.photo||"";
+    return '<div class="pe-row" data-photo="'+esc(photo)+'"><div class="pe-row-head"><span>成员 '+(i+1)+'</span><button class="pe-del" type="button">删除</button></div>'
+      +field("中文姓名","zh.name",m.zh.name)
+      +field("英文名","zh.en",m.zh.en)
+      +field("身份/角色","zh.role",m.zh.role)
+      +'<div class="pe-field"><label>照片（更换照片请联系维护者，此处不修改）</label><input value="已保留原照片" disabled></div>'
+      +'</div>';
+  }
+  function paneMembers(){
+    var rows=CONFIG.members.map(function(m,i){return memberRow(m,i);}).join("");
+    return '<div class="pe-pane" data-pane="members"><div class="pe-group"><h4>团队成员（可增删）</h4>'
+      +'<div data-arr="members">'+rows+'</div>'
+      +'<button class="pe-add" type="button" data-add="members">+ 新增一位成员</button></div></div>';
+  }
+
+  function pubRow(p,i){
+    return '<div class="pe-row"><div class="pe-row-head"><span>论文 '+(i+1)+'</span><button class="pe-del" type="button">删除</button></div>'
+      +field("年份","year",p.year)
+      +field("DOI / 链接","doi",p.doi)
+      +field("中文标题","zh.title",p.zh.title)
+      +field("英文标题","en.title",p.en.title)
+      +'</div>';
+  }
+  function panePubs(){
+    var rows=CONFIG.publications.map(function(p,i){return pubRow(p,i);}).join("");
+    return '<div class="pe-pane" data-pane="pubs"><div class="pe-group"><h4>近期发布（首页论文，可增删）</h4>'
+      +'<div data-arr="publications">'+rows+'</div>'
+      +'<button class="pe-add" type="button" data-add="publications">+ 新增一篇论文</button></div></div>';
+  }
+
+  function outRow(o,i){
+    return '<div class="pe-row"><div class="pe-row-head"><span>成果 '+(i+1)+'</span><button class="pe-del" type="button">删除</button></div>'
+      +field("月份（如 2026-10）","date",o.date)
+      +field("公众号推文链接 mp","mp",o.mp)
+      +field("原文链接 src（可空）","src",o.src)
+      +field("中文标题","zh.title",o.zh.title)
+      +field("英文原名 enName","zh.enName",o.zh.enName)
+      +field("中文期刊/出处 venue","zh.venue",o.zh.venue)
+      +field("英文标题","en.title",o.en.title)
+      +field("英文期刊/出处 venue","en.venue",o.en.venue)
+      +'</div>';
+  }
+  function paneOutputs(){
+    var rows=CONFIG.outputs.map(function(o,i){return outRow(o,i);}).join("");
+    return '<div class="pe-pane" data-pane="outputs"><div class="pe-group"><h4>研究成果（可增删）</h4>'
+      +'<div data-arr="outputs">'+rows+'</div>'
+      +'<button class="pe-add" type="button" data-add="outputs">+ 新增一条成果</button></div></div>';
+  }
+
+  function renderAll(){
+    document.getElementById("peBody").innerHTML=paneBasic()+paneResearch()+paneMembers()+panePubs()+paneOutputs();
+    document.getElementById("peTabs").innerHTML=TABS.map(function(t){
+      return '<button class="pe-tab'+(t.id===cur?' on':'')+'" data-tab="'+t.id+'" type="button">'+t.label+'</button>';
+    }).join("");
+    showPane();
+  }
+  function showPane(){
+    document.querySelectorAll(".pe-pane").forEach(function(p){p.style.display=p.dataset.pane===cur?"block":"none";});
+    document.querySelectorAll(".pe-tab").forEach(function(t){t.classList.toggle("on",t.dataset.tab===cur);});
+  }
+
+  /* ---- 空白新行模板 ---- */
+  function blankRow(arr){
+    if(arr==="research") return researchRow({icon:"net",zh:{title:"",sub:"",desc:""},en:{title:"",desc:""}},0);
+    if(arr==="members") return memberRow({photo:"",zh:{name:"",en:"",role:""}},0);
+    if(arr==="publications") return pubRow({year:"",doi:"",zh:{title:""},en:{title:""}},0);
+    if(arr==="outputs") return outRow({date:"",mp:"",src:"",zh:{title:"",enName:"",venue:""},en:{title:"",venue:""}},0);
+    return "";
+  }
+
+  /* ---- 收集 ---- */
+  function collect(){
+    var out={};
+    document.querySelectorAll("#peBody [data-path]").forEach(function(inp){
+      var v=inp.value;
+      if(inp.dataset.chips) v=v.split(/[,，]/).map(function(x){return x.trim();}).filter(Boolean);
+      sp(out,inp.dataset.path,v);
+    });
+    document.querySelectorAll("#peBody [data-arr]").forEach(function(box){
+      var key=box.dataset.arr;
+      out[key]=Array.prototype.map.call(box.querySelectorAll(".pe-row"),function(row){
+        var o={};
+        row.querySelectorAll("[data-k]").forEach(function(el){sp(o,el.dataset.k,el.value);});
+        if(row.dataset.photo) o.photo=row.dataset.photo;
+        return o;
+      });
+    });
+    if(out.publications) out.publications.forEach(function(p){
+      var y=p.year||"";
+      p.zh={title:p.zh.title,meta:"网络韧性课题组 · "+y+" · DOI"};
+      p.en={title:p.en.title,meta:"Network Resilience Group · "+y+" · DOI"};
+    });
+    return out;
+  }
+
+  function toast(msg){
+    var t=document.getElementById("peToast"); t.textContent=msg; t.classList.add("on");
+    setTimeout(function(){t.classList.remove("on");},1800);
+  }
+
+  /* ---- 事件 ---- */
+  var panel=document.getElementById("pePanel"), mask=document.getElementById("peMask");
+  document.getElementById("btnEdit").addEventListener("click",function(){renderAll();panel.classList.add("on");mask.classList.add("on");});
+  function close(){panel.classList.remove("on");mask.classList.remove("on");}
+  document.getElementById("peClose").addEventListener("click",close);
+  mask.addEventListener("click",close);
+
+  document.getElementById("peTabs").addEventListener("click",function(e){
+    var b=e.target.closest("[data-tab]"); if(!b)return; cur=b.dataset.tab; showPane();
+  });
+  document.getElementById("peBody").addEventListener("click",function(e){
+    var add=e.target.closest("[data-add]");
+    if(add){ var box=add.previousElementSibling; box.insertAdjacentHTML("beforeend",blankRow(add.dataset.add)); return; }
+    var del=e.target.closest(".pe-del");
+    if(del){ del.closest(".pe-row").remove(); }
+  });
+
+  document.getElementById("peSave").addEventListener("click",function(){
+    var out=collect();
+    __peDeepMerge(CONFIG,out);
+    localStorage.setItem("nr-config",JSON.stringify(out));
+    applyLang();
+    toast("已保存并应用");
+  });
+  document.getElementById("peExport").addEventListener("click",function(){
+    var json=JSON.stringify(CONFIG);
+    var html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+    var inject='<script>window.__NR_USER__='+json+';<\/script>';
+    html=html.replace("<head>","<head>\n"+inject);
+    var blob=new Blob([html],{type:"text/html;charset=utf-8"});
+    var a=document.createElement("a");
+    a.href=URL.createObjectURL(blob); a.download="网络韧性课题组.html";
+    document.body.appendChild(a); a.click(); a.remove();
+    toast("已导出 HTML 文件");
+  });
+  document.getElementById("peReset").addEventListener("click",function(){
+    if(confirm("清除本机保存的修改并恢复默认内容？")){ localStorage.removeItem("nr-config"); location.reload(); }
+  });
+})();
+</script>
+
+
+<script>
+/* ===== 前端口令锁：未登录不可编辑/导出 ===== */
+(function(){
+  var KEY="nr-auth";
+  function authed(){ return localStorage.getItem(KEY)==="ok"; }
+  function showLogin(){ var m=document.getElementById("loginMask"); m.classList.add("on"); setTimeout(function(){document.getElementById("lgAccount").focus();},50); }
+  function hideLogin(){ var m=document.getElementById("loginMask"); m.classList.remove("on"); document.getElementById("lgErr").textContent=""; document.getElementById("lgPass").value=""; }
+
+  document.getElementById("btnEdit").addEventListener("click",function(e){
+    if(!authed()){ e.stopImmediatePropagation(); showLogin(); }
+  },true);
+  var peExp=document.getElementById("peExport");
+  if(peExp) peExp.addEventListener("click",function(e){
+    if(!authed()){ e.stopImmediatePropagation(); showLogin(); }
+  },true);
+
+  function doLogin(){
+    var acc=document.getElementById("lgAccount").value.trim();
+    var pw=document.getElementById("lgPass").value;
+    var ok=(CONFIG.accounts||[]).some(function(a){
+      return String(a.account).trim().toLowerCase()===acc.toLowerCase() && a.password===pw;
+    });
+    if(ok){ localStorage.setItem(KEY,"ok"); hideLogin(); document.getElementById("btnEdit").click(); }
+    else{ document.getElementById("lgErr").textContent="账号或密码不正确"; }
+  }
+  document.getElementById("lgSubmit").addEventListener("click",doLogin);
+  document.getElementById("lgPass").addEventListener("keydown",function(e){ if(e.key==="Enter") doLogin(); });
+  document.getElementById("lgAccount").addEventListener("keydown",function(e){ if(e.key==="Enter") doLogin(); });
+  document.getElementById("lgCancel").addEventListener("click",hideLogin);
+  document.getElementById("loginMask").addEventListener("click",function(e){ if(e.target===this) hideLogin(); });
+
+  var head=document.querySelector(".pe-panel>header");
+  if(head){
+    var out=document.createElement("button");
+    out.className="pe-logout"; out.textContent="退出登录";
+    out.addEventListener("click",function(){
+      localStorage.removeItem(KEY);
+      document.getElementById("pePanel").classList.remove("on");
+      document.getElementById("peMask").classList.remove("on");
+    });
+    head.appendChild(out);
+  }
+})();
+</script>
+
+</body>
+</html>

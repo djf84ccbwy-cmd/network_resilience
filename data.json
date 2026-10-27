@@ -1,0 +1,532 @@
+{
+  "ui": {
+    "zh": {
+      "brandName": "网络韧性",
+      "brandSub": "交通系统韧性研究",
+      "navHome": "首页",
+      "navResearch": "研究方向",
+      "navTeam": "团队成员",
+      "heroKicker": "交通系统韧性与可靠性研究",
+      "heroTitle": "网络韧性",
+      "heroSub": "聚焦极端气候与强干扰下的交通系统",
+      "heroLede": "专注交通系统韧性与可靠性研究，融合复杂网络建模、大数据挖掘与深度学习，探索极端气候与强干扰下的交通网络演化机理与应急保障策略。",
+      "aboutKicker": "关于团队",
+      "aboutTitle": "团队简介",
+      "recentKicker": "近期论文",
+      "recentTitle": "近期发布",
+      "recentSub": "最新研究成果",
+      "navPubs": "研究成果",
+      "pubKicker": "成果汇编",
+      "pubTitle": "研究成果",
+      "pubSub": "论文解读与科研动态",
+      "contactKicker": "联系方式",
+      "contactTitle": "联系我们",
+      "mailLabel": "电子邮箱",
+      "researchKicker": "研究领域",
+      "researchTitle": "研究方向",
+      "researchSub": "韧性 · 可靠性 · 运营 · 数据 · 应急",
+      "teamKicker": "团队概览",
+      "teamTitle": "团队成员",
+      "teamSub": "本课题组成员",
+      "footerBrand": "网络韧性",
+      "btnEdit": "编辑",
+      "footerNote": "网络韧性团队 © 2026"
+    },
+    "en": {
+      "brandName": "Network Resilience",
+      "brandSub": "NETWORK RESILIENCE",
+      "navHome": "Home",
+      "navResearch": "Research",
+      "navTeam": "Team",
+      "heroKicker": "Transportation System Resilience & Reliability",
+      "heroTitle": "Network Resilience",
+      "heroSub": "TRANSPORTATION NETWORK RESILIENCE",
+      "heroLede": "An academic space for transportation system resilience and reliability, combining complex network modeling, big-data mining and deep learning to study network evolution and emergency response under extreme climate and severe disruptions.",
+      "aboutKicker": "About the Team",
+      "aboutTitle": "About the Team",
+      "recentKicker": "Recent Publications",
+      "recentTitle": "Recent Publications",
+      "recentSub": "Latest research outputs",
+      "navPubs": "Publications",
+      "pubKicker": "Research Outputs",
+      "pubTitle": "Research Outputs",
+      "pubSub": "Paper reviews and research updates",
+      "contactKicker": "Contact",
+      "contactTitle": "Contact Us",
+      "mailLabel": "Email",
+      "researchKicker": "Research Direction",
+      "researchTitle": "Research Direction",
+      "researchSub": "Resilience · Reliability · Operations · Data · Emergency",
+      "teamKicker": "Team Members",
+      "teamTitle": "Team Members",
+      "teamSub": "People of the Group",
+      "footerBrand": "Network Resilience",
+      "btnEdit": "Edit",
+      "footerNote": "Network Resilience Team © 2026"
+    }
+  },
+  "about": {
+    "zh": "这里是一个专注于交通系统韧性与可靠性研究的学术空间。我们立足于现代交通系统面临的安全与可持续挑战，致力于探究极端气候与强干扰事件下的交通网络演化机理与应急保障策略。建设本网站的目的，不仅是为了展示团队主持欧盟“玛丽·居里学者”项目、国家自然科学基金等前沿课题的研究进展，更是希望搭建一个开放的知识共享平台。在这里，我们将系统分享自身的最新学术成果，同时也会持续追踪并分享相关领域内的突破性新发现与优秀科研成果，期望能借此与同行学者及感兴趣的读者共同探讨交通系统发展的新理论与新技术。在研究范式上，我们高度重视“交通+数据科学”的深度交叉融合，广泛运用复杂网络建模、大数据挖掘以及深度学习等前沿技术解决实际工程问题。因此，我们不仅欢迎交通工程专业的同学，也极其期待数学、计算机科学、统计学等理工科背景的英才加入。扎实的建模计算能力与数据分析基础，是团队不断突破创新的核心驱动力。多学科的碰撞不仅能为交通韧性研究注入新活力，也有助于我们在浩瀚的科研文献中敏锐捕捉更多有价值的交叉领域新发现。团队始终致力于营造开放、包容且充满活力的学术环境。导师年轻有为，秉持扁平化的管理与指导理念，内部沟通顺畅且毫无距离感，无论是学术探讨还是进度交流，大家都能在轻松的氛围中大胆表达想法、共同攻克难题。在人才培养方面，我们不仅注重通过前沿科研项目锤炼学生数据分析与网络建模的硬核技能，更依托广泛的国际合作关系，为成员提供丰富的海外交流与深造读博资源。我们真诚期待那些愿意扎实积累、渴望真正成长的同学加入，与我们一同在这个平台上分享新知、交流思想，在交通系统韧性领域探索未知、创造价值。",
+    "en": "This is an academic space dedicated to the study of transportation system resilience and reliability. Grounded in the safety and sustainability challenges facing modern transportation systems, we focus on understanding the evolution mechanisms of transportation networks and developing emergency response strategies under extreme climate conditions and severe disruptions. The purpose of establishing this website is not only to showcase research progress from our team's leading projects—including the European Union's Marie Skłodowska-Curie Actions and the National Natural Science Foundation of China—but also to build an open platform for knowledge sharing. Here, we systematically share our latest academic achievements while continuously tracking and disseminating groundbreaking discoveries and outstanding research outcomes from related fields, aiming to engage fellow scholars and interested readers in exploring new theories and technologies for transportation system development. In terms of research methodology, we place strong emphasis on the deep integration of transportation and data science, leveraging complex network modeling, big-data mining, and deep learning to address real-world engineering challenges. Therefore, we warmly welcome students majoring in transportation engineering, as well as talented individuals with backgrounds in mathematics, computer science, statistics, and other STEM disciplines. Solid skills in modeling, computation, and data analysis serve as the core driving force behind our team's continuous innovation. Interdisciplinary collaboration not only infuses fresh vitality into resilience research but also enables us to keenly identify valuable cross-disciplinary breakthroughs within the vast scientific literature. Our team is committed to fostering an open, inclusive, and dynamic academic environment. Our mentors are young and accomplished, embracing a flat management and mentoring philosophy that ensures smooth, barrier-free communication. Whether discussing academic ideas or project progress, everyone feels comfortable expressing thoughts freely and working together to overcome challenges in a relaxed atmosphere. In talent development, we emphasize not only honing students' core competencies in data analysis and network modeling through cutting-edge research projects, but also providing abundant opportunities for overseas exchange and doctoral studies through extensive international collaborations. We sincerely invite those who are willing to work diligently and aspire to genuine growth to join us—share knowledge, exchange ideas, explore the unknown, and create value together in the field of transportation system resilience."
+  },
+  "chips": {
+    "zh": [
+      "复杂网络建模",
+      "大数据挖掘",
+      "深度学习"
+    ],
+    "en": [
+      "Complex Network Modeling",
+      "Big Data Mining",
+      "Deep Learning"
+    ]
+  },
+  "research": [
+    {
+      "icon": "net",
+      "zh": {
+        "title": "交通韧性与可靠性",
+        "sub": "系统韧性与可靠性评估",
+        "desc": "探究极端气候（暴雨、高温、寒潮、台风）、地震滑坡等地质灾害与强干扰事件下交通网络的演化机理，评估系统韧性与可靠度，兼顾节假日峰值客流等常态压力。"
+      },
+      "en": {
+        "title": "Transportation Resilience & Reliability",
+        "sub": "",
+        "desc": "Study network evolution under extreme climate (rainstorms, heatwaves, cold waves, typhoons), geohazards (earthquakes, landslides) and severe disruptions; assess resilience and reliability, including holiday peak crowds."
+      }
+    },
+    {
+      "icon": "route",
+      "zh": {
+        "title": "交通运营管理",
+        "sub": "运营组织与客流调度",
+        "desc": "面向日常运营与春节、黄金周等节假日潮汐式大客流，优化通行组织、运力调度与客流疏导，提升供需匹配与网络承载弹性。"
+      },
+      "en": {
+        "title": "Transportation Operation Management",
+        "sub": "",
+        "desc": "Optimize traffic organization, capacity dispatch and crowd diversion for daily operations and tidal holiday peaks (Spring Festival, golden weeks), improving supply-demand matching and load elasticity."
+      }
+    },
+    {
+      "icon": "peak",
+      "zh": {
+        "title": "大数据挖掘与运用",
+        "sub": "复杂网络与数据驱动",
+        "desc": "广泛运用复杂网络建模、大数据挖掘与深度学习，从多模态交通数据中识别规律、支撑韧性评估与调度决策。"
+      },
+      "en": {
+        "title": "Big Data Mining & Application",
+        "sub": "",
+        "desc": "Apply complex network modeling, big-data mining and deep learning to extract patterns from multimodal traffic data and support resilience assessment and dispatching decisions."
+      }
+    },
+    {
+      "icon": "weather",
+      "zh": {
+        "title": "灾害应急管理",
+        "sub": "灾害预警与应急抢通",
+        "desc": "面向极端气候、地质灾害与突发中断，开展级联失效预警、应急保障与抢通恢复，缩短系统停运时间。"
+      },
+      "en": {
+        "title": "Disaster Emergency Management",
+        "sub": "",
+        "desc": "Provide cascading-failure early warning, emergency response and clearance recovery under climate extremes, geohazards and sudden disruptions to cut system downtime."
+      }
+    },
+    {
+      "icon": "geo",
+      "zh": {
+        "title": "社会可持续性",
+        "sub": "可持续发展与国际合作",
+        "desc": "立足交通系统安全与可持续挑战，建设开放共享的知识平台，依托国际合作培养交通与数理统计交叉学科人才。"
+      },
+      "en": {
+        "title": "Social Sustainability",
+        "sub": "",
+        "desc": "Address safety and sustainability challenges of transport, build an open knowledge-sharing platform, and nurture interdisciplinary talent across transport, mathematics, computer science and statistics through international collaboration."
+      }
+    }
+  ],
+  "researchLead": {
+    "zh": "围绕 <b>交通系统韧性与可靠性</b>，团队覆盖韧性评估、运营管理、数据挖掘、灾害应急与社会可持续五个方向，并延伸至极端气候、地质灾害与节假日峰值等典型场景。",
+    "en": "Centered on <b>transportation resilience and reliability</b>, the team covers resilience assessment, operation management, data mining, disaster emergency management and social sustainability, extending to extreme climate, geohazard and holiday-peak scenarios."
+  },
+  "members": [
+    {
+      "photo": "刘杰.jpg",
+      "sur": "刘",
+      "zh": {
+        "name": "刘杰",
+        "en": "Jie Liu",
+        "role": "剑桥大学博士后 · 博士 · 副教授"
+      },
+      "en": {
+        "name": "Jie Liu",
+        "en": "",
+        "role": "Postdoctoral Fellow at the University of Cambridge · Ph.D. · Professor"
+      }
+    },
+    {
+      "photo": "王秋.jpg",
+      "sur": "王",
+      "zh": {
+        "name": "王秋",
+        "en": "Qiu Wang",
+        "role": "硕士生"
+      },
+      "en": {
+        "name": "Qiu Wang",
+        "en": "",
+        "role": "Master's student"
+      }
+    },
+    {
+      "photo": "刘芝宇.jpg",
+      "sur": "刘",
+      "zh": {
+        "name": "刘芝宇",
+        "en": "Zhiyu Liu",
+        "role": "硕士生"
+      },
+      "en": {
+        "name": "Zhiyu Liu",
+        "en": "",
+        "role": "Master's student"
+      }
+    },
+    {
+      "photo": "李周宇.jpg",
+      "sur": "李",
+      "zh": {
+        "name": "李周宇",
+        "en": "Zhouyu Li",
+        "role": "硕士生"
+      },
+      "en": {
+        "name": "Zhouyu Li",
+        "en": "",
+        "role": "Master's student"
+      }
+    },
+    {
+      "photo": "高彦丹.jpg",
+      "sur": "高",
+      "zh": {
+        "name": "高彦丹",
+        "en": "Yandan Gao",
+        "role": "硕士生"
+      },
+      "en": {
+        "name": "Yandan Gao",
+        "en": "",
+        "role": "Master's student"
+      }
+    },
+    {
+      "photo": "张宇航.jpg",
+      "sur": "张",
+      "zh": {
+        "name": "张宇航",
+        "en": "Yuhang Zhang",
+        "role": "硕士生"
+      },
+      "en": {
+        "name": "Yuhang Zhang",
+        "en": "",
+        "role": "Master's student"
+      }
+    },
+    {
+      "photo": "王彩娟.jpg",
+      "sur": "王",
+      "zh": {
+        "name": "王彩娟",
+        "en": "Caijuan Wang",
+        "role": "硕士生"
+      },
+      "en": {
+        "name": "Caijuan Wang",
+        "en": "",
+        "role": "Master's student"
+      }
+    },
+    {
+      "photo": "辛畅恬.jpg",
+      "sur": "辛",
+      "zh": {
+        "name": "辛畅恬",
+        "en": "Changtian Xin",
+        "role": "硕士生"
+      },
+      "en": {
+        "name": "Changtian Xin",
+        "en": "",
+        "role": "Master's student"
+      }
+    },
+    {
+      "photo": "文斐.jpg",
+      "sur": "文",
+      "zh": {
+        "name": "文斐",
+        "en": "Fei Wen",
+        "role": "硕士生"
+      },
+      "en": {
+        "name": "Fei Wen",
+        "en": "",
+        "role": "Master's student"
+      }
+    },
+    {
+      "photo": "陈永上.jpg",
+      "sur": "陈",
+      "zh": {
+        "name": "陈永上",
+        "en": "Yongshang Chen",
+        "role": "硕士生"
+      },
+      "en": {
+        "name": "Yongshang Chen",
+        "en": "",
+        "role": "Master's student"
+      }
+    }
+  ],
+  "publications": [
+    {
+      "year": "2026",
+      "doi": "https://doi.org/10.1016/j.ijdrr.2026.106292",
+      "zh": {
+        "title": "受飓风引发风暴潮影响的交通系统韧性评估",
+        "meta": "网络韧性课题组 · 2026 · DOI"
+      },
+      "en": {
+        "title": "Resilience assessment of transportation systems subject to hurricane-induced storm surge",
+        "meta": "Network Resilience Group · 2026 · DOI"
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "date": "2026-10",
+      "mp": "https://mp.weixin.qq.com/s/qj2uipHiYWNDT4-GhTyfMg",
+      "src": "https://doi.org/10.1016/j.ijdrr.2026.106292",
+      "zh": {
+        "title": "他山之石：受飓风引发风暴潮影响的交通系统韧性评估",
+        "enName": "Resilience assessment of transportation systems subjected to hurricane-induced storm surge",
+        "venue": "Int. J. Disaster Risk Reduction, 2026 · Xuechen Ni, Maria Koliou"
+      },
+      "en": {
+        "title": "Resilience assessment of transportation systems subjected to hurricane-induced storm surge",
+        "venue": "Int. J. Disaster Risk Reduction, 2026 · Xuechen Ni, Maria Koliou"
+      }
+    },
+    {
+      "date": "2026-10",
+      "mp": "https://mp.weixin.qq.com/s/9AgT0S31gQwGxWRjGGhycg",
+      "src": "https://doi.org/10.1038/s41467-026-76024-2",
+      "zh": {
+        "title": "他山之石：美国历史上曾被“红线”划定的社区面临极端洪水的暴露风险不成比例",
+        "enName": "Disproportionate exposure to extreme floods in historically redlined U.S. communities",
+        "venue": "Nature Communications, 2026"
+      },
+      "en": {
+        "title": "Disproportionate exposure to extreme floods in historically redlined U.S. communities",
+        "venue": "Nature Communications, 2026"
+      }
+    },
+    {
+      "date": "2026-09",
+      "mp": "https://mp.weixin.qq.com/s/16nvFSdS11xizkpPo3m8Gw",
+      "src": "https://doi.org/10.1016/j.horiz.2026.100184",
+      "zh": {
+        "title": "他山之石：面向级联失效效应的全球航运网络动态韧性评估——基于AIS数据驱动的复杂网络分析",
+        "enName": "Dynamic resilience assessment of global shipping networks against cascading effects: An AIS data-driven complex network analysis",
+        "venue": "Sustainable Horizons, 2026 · Huijun Yang et al."
+      },
+      "en": {
+        "title": "Dynamic resilience assessment of global shipping networks against cascading effects",
+        "venue": "Sustainable Horizons, 2026 · Huijun Yang et al."
+      }
+    },
+    {
+      "date": "2026-08",
+      "mp": "https://mp.weixin.qq.com/s/BbpEvWy_F_qwR7gJITf1PA",
+      "src": "https://doi.org/10.1115/1.4072424",
+      "zh": {
+        "title": "城市轨道交通网络脆弱性评估与关键折返区段识别",
+        "enName": "Vulnerability Evaluation and Critical Turn-Back Interval Identification for an Urban Rail Transit Network",
+        "venue": "ASCE-ASME J. Risk & Uncertainty in Eng. Systems, Part B · Jie Liu et al."
+      },
+      "en": {
+        "title": "Vulnerability Evaluation and Critical Turn-Back Interval Identification for an Urban Rail Transit Network",
+        "venue": "ASCE-ASME J. Risk & Uncertainty in Eng. Systems, Part B · Jie Liu et al."
+      }
+    },
+    {
+      "date": "2026-06",
+      "mp": "https://mp.weixin.qq.com/s/wqMjsLMB-07kexFWYrAS5Q",
+      "src": "https://doi.org/10.1016/j.tra.2026.104987",
+      "zh": {
+        "title": "他山之石：运营中断下多式联运集装箱港口韧性评估：一项全局敏感性分析",
+        "enName": "Resilience assessment of multimodal container ports under operational disruptions: a global sensitivity analysis",
+        "venue": "Transportation Research Part A, 2026 · Jinglin Zhang et al."
+      },
+      "en": {
+        "title": "Resilience assessment of multimodal container ports under operational disruptions",
+        "venue": "Transportation Research Part A, 2026 · Jinglin Zhang et al."
+      }
+    },
+    {
+      "date": "2026-05",
+      "mp": "https://mp.weixin.qq.com/s/svt_ULOkh-Q12FbFpjUTvA",
+      "src": "https://doi.org/10.1016/j.ress.2025.111737",
+      "zh": {
+        "title": "他山之石：从易受洪水影响到防洪准备：建设韧性多模式交通网络中的恢复与适应互动",
+        "enName": "From flood-prone to flood-ready: The restoration-adaptation interplay in building resilient multimodal transport networks",
+        "venue": "Reliability Engineering & System Safety · Chunhong Li et al."
+      },
+      "en": {
+        "title": "From flood-prone to flood-ready: restoration-adaptation interplay in multimodal transport networks",
+        "venue": "Reliability Engineering & System Safety · Chunhong Li et al."
+      }
+    },
+    {
+      "date": "2026-05",
+      "mp": "https://mp.weixin.qq.com/s/Eg4fQ4-3IdBtWkTYsceaaA",
+      "src": "https://doi.org/10.1016/j.ress.2025.111630",
+      "zh": {
+        "title": "他山之石：多模式交通网络路段级多维度冗余评估与优化",
+        "enName": "Assessing and improving multi-perspective redundancy at segment level in multimodal transportation networks",
+        "venue": "Reliability Engineering & System Safety · Wenxin Ma et al."
+      },
+      "en": {
+        "title": "Assessing and improving multi-perspective redundancy in multimodal transportation networks",
+        "venue": "Reliability Engineering & System Safety · Wenxin Ma et al."
+      }
+    },
+    {
+      "date": "2026-05",
+      "mp": "https://mp.weixin.qq.com/s/4oDbS0CdCBP29_otTXXywQ",
+      "src": "https://doi.org/10.1080/01441647.2026.2664410",
+      "zh": {
+        "title": "城市轨道交通韧性：影响因素及提升策略的系统综述",
+        "enName": "Urban rail transit resilience: a systematic review of influencing factors and enhancement strategies",
+        "venue": "Transport Reviews · Xiaowei Liu, Jinqu Chen, Bo Du, Jie Liu, Qiyuan Peng"
+      },
+      "en": {
+        "title": "Urban rail transit resilience: a systematic review of influencing factors and enhancement strategies",
+        "venue": "Transport Reviews · Xiaowei Liu, Jinqu Chen, Bo Du, Jie Liu, Qiyuan Peng"
+      }
+    },
+    {
+      "date": "2026-04",
+      "mp": "https://mp.weixin.qq.com/s/GGocZPQRqjY5OfjErwPzBg",
+      "src": "https://linkinghub.elsevier.com/retrieve/pii/S0951832025011275",
+      "zh": {
+        "title": "他山之石：海运网络动态韧性评估：基于级联失效与流量演变的建模",
+        "enName": "Dynamic port resilience assessment in the maritime network: modeling flow evolution and cascading failure",
+        "venue": "Reliability Engineering & System Safety · Huiyan Zhang et al."
+      },
+      "en": {
+        "title": "Dynamic port resilience assessment in the maritime network",
+        "venue": "Reliability Engineering & System Safety · Huiyan Zhang et al."
+      }
+    },
+    {
+      "date": "2026-04",
+      "mp": "https://mp.weixin.qq.com/s/UxticOdw40IwafZCQKiEYw",
+      "src": "https://doi.org/10.1016/j.ress.2026.112746",
+      "zh": {
+        "title": "工业共生网络的韧性空间：一项跨35个案例的深度研究",
+        "enName": "Resilience Space of Interdependent Networks: Insights from Industrial Symbiosis",
+        "venue": "Reliability Engineering & System Safety · Zizhen Xu, Jie Liu et al."
+      },
+      "en": {
+        "title": "Resilience Space of Interdependent Networks: Insights from Industrial Symbiosis",
+        "venue": "Reliability Engineering & System Safety · Zizhen Xu, Jie Liu et al."
+      }
+    },
+    {
+      "date": "2026-04",
+      "mp": "https://mp.weixin.qq.com/s/o9v6_Yg0pTxepA4_uIjZmA",
+      "src": "",
+      "zh": {
+        "title": "他山之石：当洪水来袭，你还能按时上班吗？一项关于公共交通系统脆弱性的深度研究",
+        "enName": "Understanding flood risk in public transit systems: Insights from accessibility and vulnerability analysis in Iowa",
+        "venue": "Int. J. Disaster Risk Reduction, 2025 · Yazeed Alabbad, Ibrahim Demir"
+      },
+      "en": {
+        "title": "Understanding flood risk in public transit systems: accessibility and vulnerability analysis in Iowa",
+        "venue": "Int. J. Disaster Risk Reduction, 2025 · Yazeed Alabbad, Ibrahim Demir"
+      }
+    },
+    {
+      "date": "2026-03",
+      "mp": "https://mp.weixin.qq.com/s/78Pv0_dvQW-gu7_LsPSqcQ",
+      "src": "https://doi.org/10.1016/j.jclepro.2026.147987",
+      "zh": {
+        "title": "他山之石：日常干扰下城市道路交通系统综合弹性动态评估框架",
+        "enName": "An integrated resilience dynamic assessment framework for urban road transportation systems under daily disruptions",
+        "venue": "Journal of Cleaner Production · Qi Ai et al."
+      },
+      "en": {
+        "title": "Integrated resilience dynamic assessment framework for urban road transportation systems",
+        "venue": "Journal of Cleaner Production · Qi Ai et al."
+      }
+    },
+    {
+      "date": "2026-03",
+      "mp": "https://mp.weixin.qq.com/s/f1kBSMbA2v1KOWtmY0UGyA",
+      "src": "https://link.cnki.net/urlid/11.5258.U.20251127.1453.002",
+      "zh": {
+        "title": "北京交通大学学报发文：识别“最脆弱”的地铁站与最优恢复顺序",
+        "enName": "韧性视角下城规交通关键车站识别与恢复顺序优化",
+        "venue": "北京交通大学学报 · 刘杰、李周宇、石庄彬、王宇浩、何明卫"
+      },
+      "en": {
+        "title": "Identifying critical metro stations and optimal recovery order from a resilience perspective",
+        "venue": "Journal of Beijing Jiaotong University · Jie Liu et al."
+      }
+    },
+    {
+      "date": "2026-02",
+      "mp": "https://mp.weixin.qq.com/s/kMRCmbzDa4NKf9iGwC2BEw",
+      "src": "https://authors.elsevier.com/sd/article/S0951-8320(26)00124-9",
+      "zh": {
+        "title": "不止于内涝：极端降雨对道路网络的影响评估",
+        "enName": "Beyond waterlogging: Evaluating the impact of extreme rainfall on the road network",
+        "venue": "Reliability Engineering & System Safety · Jie Liu, Zizhen Xu, Li Wan, Kristen MacAskill"
+      },
+      "en": {
+        "title": "Beyond waterlogging: impact of extreme rainfall on the road network",
+        "venue": "Reliability Engineering & System Safety · Jie Liu, Zizhen Xu, Li Wan, Kristen MacAskill"
+      }
+    },
+    {
+      "date": "2026-02",
+      "mp": "https://mp.weixin.qq.com/s/XvuzoLMvoC62ykMZ0zWgtQ",
+      "src": "https://www.sciencedirect.com/science/article/pii/S2212420926000361",
+      "zh": {
+        "title": "IJDRR发文：暴雨下的道路韧性——整合多种影响因素与延误传播",
+        "enName": "Road Transport Resilience under Extreme Rainfall: Integrating Multiple Impact Factors and Delay Propagation",
+        "venue": "Int. J. Disaster Risk Reduction · Jie Liu, Zizhen Xu, Li Wan, Kristen MacAskill"
+      },
+      "en": {
+        "title": "Road transport resilience under extreme rainfall: impact factors and delay propagation",
+        "venue": "Int. J. Disaster Risk Reduction · Jie Liu, Zizhen Xu, Li Wan, Kristen MacAskill"
+      }
+    }
+  ],
+  "contact": {
+    "mail": "2437937284@qq.com"
+  },
+  "accounts": [
+    {
+      "account": "admin@qq.com",
+      "password": "resilience2026"
+    }
+  ]
+}

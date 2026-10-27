@@ -1,0 +1,52 @@
+课题组基本信息(中英文)
+
+| 课题组全称 | 网络韧性 |
+| --- | --- |
+|  | network resilience |
+| Logo |  |
+| 关于我们<br><br> | 这里是一个专注于交通系统韧性与可靠性研究的学术空间。我们立足于现代交通系统面临的安全与可持续挑战，致力于探究极端气候与强干扰事件下的交通网络演化机理与应急保障策略。建设本网站的目的，不仅是为了展示团队主持欧盟“玛丽·居里学者”项目、国家自然科学基金等前沿课题的研究进展，更是希望搭建一个开放的知识共享平台。在这里，我们将系统分享自身的最新学术成果，同时也会持续追踪并分享相关领域内的突破性新发现与优秀科研成果，期望能借此与同行学者及感兴趣的读者共同探讨交通系统发展的新理论与新技术。在研究范式上，我们高度重视“交通+数据科学”的深度交叉融合，广泛运用复杂网络建模、大数据挖掘以及深度学习等前沿技术解决实际工程问题。因此，我们不仅欢迎交通工程专业的同学，也极其期待数学、计算机科学、统计学等理工科背景的英才加入。扎实的建模计算能力与数据分析基础，是团队不断突破创新的核心驱动力。多学科的碰撞不仅能为交通韧性研究注入新活力，也有助于我们在浩瀚的科研文献中敏锐捕捉更多有价值的交叉领域新发现。团队始终致力于营造开放、包容且充满活力的学术环境。导师年轻有为，秉持扁平化的管理与指导理念，内部沟通顺畅且毫无距离感，无论是学术探讨还是进度交流，大家都能在轻松的氛围中大胆表达想法、共同攻克难题。在人才培养方面，我们不仅注重通过前沿科研项目锤炼学生数据分析与网络建模的硬核技能，更依托广泛的国际合作关系，为成员提供丰富的海外交流与深造读博资源。我们真诚期待那些愿意扎实积累、渴望真正成长的同学加入，与我们一同在这个平台上分享新知、交流思想，在交通系统韧性领域探索未知、创造价值。 |
+| 研究方向 | 交通韧性、可靠性，交通运营管理、大数据挖掘与运用，灾害应急管理与社会可持续性 |
+|  | Transportation resilience, reliability, transportation operation management, big data mining and application, disaster emergency management and social sustainability |
+| 首页大图/轮播图 |  |
+| 联系方式 | 2437937284@qq.com |
+
+团队成员(中英文)
+
+| 姓名 | 刘杰，Jie Liu |
+| --- | --- |
+| 身份/职称 | 剑桥大学博士后，博士，副教授，Postdoctoral Fellow at the University of Cambridge,Ph.D.,Professor |
+| 照片 |  |
+| 姓名 | 王秋，Qiu Wang |
+| 身份/职称 | 硕士生，Master’s student |
+| 照片 |  |
+| 姓名 | 刘芝宇，Zhiyu Liu |
+| 身份/职称 | 硕士生，Master’s student |
+| 照片 |  |
+| 姓名 | 李周宇，Zhouyu Li |
+| 身份/职称 | 硕士生，Master’s student |
+| 照片 |  |
+| 姓名 | 高彦丹，Yandan Gao |
+| 身份/职称 | 硕士生，Master’s student |
+| 照片 |  |
+| 姓名 | 张宇航，Yuhang Zhang |
+| 身份/职称 | 硕士生，Master’s student |
+| 照片 |  |
+| 姓名 | 王彩娟，Caijuan Wang |
+| 身份/职称 | 硕士生，Master’s student |
+| 照片 |  |
+| 姓名 | 辛畅恬，Changtian Xin |
+| 身份/职称 | 硕士生，Master’s student |
+| 照片 |  |
+| 姓名 | 文斐，Fei Wen |
+| 身份/职称 | 硕士生，Master’s student |
+| 照片 |  |
+| 姓名 | 陈永上，Yongshang Chen |
+| 身份/职称 | 硕士生，Master’s student |
+| 照片 |  |
+
+论文清单(中英文)
+
+| 标题 | 受飓风引发风暴潮影响的交通系统韧性评估，Resilience assessment of transportation systems subject to hurricane-induced storm surge |
+| --- | --- |
+| 发表年份 | 2026 |
+| DOI链接 | https://doi.org/10.1016/j.ijdrr.2026.106292 |
