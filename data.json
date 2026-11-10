@@ -159,12 +159,16 @@
       "zh": {
         "name": "刘杰",
         "en": "Jie Liu",
-        "role": "剑桥大学博士后 · 博士 · 副教授"
+        "role": "剑桥大学博士后 · 博士 · 副教授",
+        "bio": "主要研究方向为交通系统韧性、复杂网络理论与应用。主持国家自然科学基金青年项目1项，发表SCI/SSCI论文10余篇。",
+        "email": "liujie@kmust.edu.cn"
       },
       "en": {
         "name": "Jie Liu",
         "en": "",
-        "role": "Postdoctoral Fellow at the University of Cambridge · Ph.D. · Professor"
+        "role": "Postdoctoral Fellow at the University of Cambridge · Ph.D. · Associate Professor",
+        "bio": "Research focuses on transportation system resilience and complex network theory. Published 10+ SCI/SSCI papers.",
+        "email": "liujie@kmust.edu.cn"
       }
     },
     {

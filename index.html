@@ -111,16 +111,34 @@ section{padding:72px 0}
 .dir-card p{font-size:14.5px;color:var(--muted)}
 
 /* ===== 团队（独立视图） ===== */
-.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:28px;max-width:1200px;margin:0 auto}
-.member{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-align:center;transition:transform .2s, box-shadow .2s}
+.team-section-title{font-size:22px;font-weight:700;color:var(--navy);margin:40px 0 24px;padding-bottom:10px;border-bottom:2px solid var(--teal)}
+
+/* 导师大卡片 */
+.leader-card{display:grid;grid-template-columns:320px 1fr;gap:40px;max-width:1000px;margin:0 auto 50px;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;padding:32px;align-items:start}
+.leader-card .photo{border-radius:12px;overflow:hidden;height:380px}
+.leader-card .photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.leader-card .photo.ph{display:flex;align-items:center;justify-content:center;background:#E8EEF1;color:var(--navy);font-size:64px;font-weight:900}
+.leader-card .info h3{font-size:24px;font-weight:700;color:var(--navy);margin-bottom:4px}
+.leader-card .info .title{font-size:16px;color:var(--teal-dark);font-weight:600;margin-bottom:20px}
+.leader-card .info .bio{font-size:15px;color:var(--body);line-height:1.7;margin-bottom:20px}
+.leader-card .info .meta-item{font-size:14px;color:var(--muted);margin-bottom:8px}
+.leader-card .info .meta-item strong{color:var(--navy)}
+
+/* 研究生网格 */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:30px;max-width:1200px;margin:0 auto}
+.member{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:transform .2s, box-shadow .2s}
 .member:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(14,39,64,.12)}
-.member .photo{height:300px;background:#E8EEF1;overflow:hidden}
+.member .photo{height:280px;background:#E8EEF1;overflow:hidden}
 .member .photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
 .member .photo.ph{display:flex;align-items:center;justify-content:center;color:var(--navy);font-size:48px;font-weight:900}
-.member .info{padding:22px 16px}
-.member .name{font-size:19px;font-weight:700;color:var(--navy)}
-.member .name-en{font-size:14px;color:var(--muted);margin-top:4px;font-style:italic}
-.member .role{display:inline-block;margin-top:12px;font-size:13px;color:var(--teal-dark);background:#E7F3F2;border-radius:999px;padding:5px 14px}
+.member .info{padding:20px}
+.member .name{font-size:18px;font-weight:700;color:var(--navy)}
+.member .name-en{font-size:13px;color:var(--muted);margin-top:2px;font-style:italic}
+.member .role{display:inline-block;margin-top:10px;font-size:12px;color:var(--teal-dark);background:#E7F3F2;border-radius:999px;padding:4px 12px;margin-bottom:14px}
+.member .edu{font-size:13px;color:var(--muted);margin-bottom:10px;line-height:1.5}
+.member .research{font-size:13.5px;color:var(--body);line-height:1.6;margin-bottom:12px}
+.member .extra{font-size:12.5px;color:var(--muted);line-height:1.8}
+.member .extra span{display:block}
 
 /* ===== 联系 ===== */
 .contact{background:var(--navy-deep);color:#E6EEF3}
@@ -444,17 +462,55 @@ function renderResearch(){
     </div>`).join("");
 }
 function renderTeam(){
-  $("#teamList").innerHTML = CONFIG.members.map(m=>{
-    const photo = m.photo
-      ? `<div class="photo"><img src="${m.photo.startsWith('data:')?m.photo:'assets/'+m.photo}" alt="${m[lang].name}"></div>`
-      : `<div class="photo ph">${m.sur}</div>`;
-    return `<div class="member">${photo}
-      <div class="info">
-        <div class="name">${m[lang].name}</div>
-        ${m[lang].en?`<div class="name-en">${m[lang].en}</div>`:""}
-        <div class="role">${m[lang].role}</div>
-      </div></div>`;
-  }).join("");
+  const members = CONFIG.members;
+  // 区分导师和研究生：第一个是导师，或者 role 里有"教授"/"导师"的是导师
+  const leaders = members.filter(m => m[lang].role.includes('教授') || m[lang].role.includes('导师') || m[lang].role.includes('副教授'));
+  const students = members.filter(m => !(m[lang].role.includes('教授') || m[lang].role.includes('导师') || m[lang].role.includes('副教授')));
+  
+  let html = '';
+  
+  // 渲染导师板块
+  if(leaders.length > 0){
+    html += `<div class="team-section-title">${lang==='zh'?'导师':'Group Leader'}</div>`;
+    leaders.forEach(m=>{
+      const photo = m.photo
+        ? `<div class="photo"><img src="${m.photo.startsWith('data:')?m.photo:'assets/'+m.photo}" alt="${m[lang].name}"></div>`
+        : `<div class="photo ph">${m.sur}</div>`;
+      html += `<div class="leader-card">${photo}
+        <div class="info">
+          <h3>${m[lang].name}</h3>
+          <div class="title">${m[lang].role}</div>
+          <div class="bio">${m[lang].bio || ''}</div>
+          ${m[lang].email?`<div class="meta-item"><strong>${lang==='zh'?'邮箱':'Email'}:</strong> ${m[lang].email}</div>`:""}
+        </div></div>`;
+    });
+  }
+  
+  // 渲染研究生板块
+  if(students.length > 0){
+    html += `<div class="team-section-title">${lang==='zh'?'在读研究生':'Graduate Students'}</div>`;
+    html += `<div class="team-grid">`;
+    students.forEach(m=>{
+      const photo = m.photo
+        ? `<div class="photo"><img src="${m.photo.startsWith('data:')?m.photo:'assets/'+m.photo}" alt="${m[lang].name}"></div>`
+        : `<div class="photo ph">${m.sur}</div>`;
+      html += `<div class="member">${photo}
+        <div class="info">
+          <div class="name">${m[lang].name}</div>
+          ${m[lang].en?`<div class="name-en">${m[lang].en}</div>`:""}
+          <div class="role">${m[lang].role}</div>
+          ${m[lang].edu?`<div class="edu">${m[lang].edu}</div>`:""}
+          ${m[lang].research?`<div class="research">${m[lang].research}</div>`:""}
+          <div class="extra">
+            ${m[lang].hometown?`<span>${lang==='zh'?'家乡':'Hometown'}: ${m[lang].hometown}</span>`:""}
+            ${m[lang].hobbies?`<span>${lang==='zh'?'爱好':'Hobbies'}: ${m[lang].hobbies}</span>`:""}
+          </div>
+        </div></div>`;
+    });
+    html += `</div>`;
+  }
+  
+  $("#teamList").innerHTML = html;
 }
 function renderPubs(){
   $("#pubList").innerHTML = CONFIG.publications.map(p=>`
